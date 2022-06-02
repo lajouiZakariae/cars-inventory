@@ -1,15 +1,18 @@
-<?php include "./partials/header.php"; ?>
+<?php
+    include "config.php";
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname",$user,$password);
+    $stm = $pdo->query("SELECT * FROM cars");
+    $data = $stm->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <div class="container">
-    <form action="/" method="POST">
-        <input type="text" name="make" placeholder="Make" id="">
-        <input type="text" name="model" placeholder="Model" id="">
-        <input type="text" name="year" placeholder="Year" id="">
-        <input type="text" name="body_style" placeholder="Body Style" id="">
-        <input type="text" name="drive_type" placeholder="Drive Type" id="">
-        <input type="text" name="doors" placeholder="doors" id="">
-        <input type="text" name="price" placeholder="Price" id="">
-        <input type="text" name="instock" placeholder="Status" id="">
-        <button class="btn btn-block btn-primary">Add Car</button>
-    </form>
-</div>
-<?php include "./partials/footer.php"; ?>
+    <button class="btn btn-primary" onclick="location.assign('add-car.php')" >Add a New Car</button>
+    <div class="row">
+        <?php foreach ($data as $car):?>
+            <div class="col-3">
+                <h2><?php echo $car["make"] ?>&nbsp;<?php echo $car["model"] ?></h2>
+                <h3><?php echo $car["year"] ?></h3>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div> 
